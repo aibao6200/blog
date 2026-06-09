@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页 | Your Name</title>
+    <!-- 引入 Google Fonts (Inter字体，现代感强) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS 变量定义 (方便换色) --- */
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #1a1a1a;
+            --text-secondary: #666666;
+            --accent-color: #2563eb; /* 蓝色点缀，可改为任何你喜欢的颜色 */
+            --card-bg: #f9fafb;
+            --transition: all 0.3s ease;
+        }
+
+        /* --- 基础重置 --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- 布局容器 --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- 导航栏 --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- Hero 区域 (首屏) --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--text-main);
+            color: white;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* --- 通用 Section 样式 --- */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 50px;
+            font-weight: 600;
+        }
+
+        /* --- 关于我 --- */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+
+        /* 简单的头像占位符 */
+        .avatar-placeholder {
+            width: 100%;
+            height: 400px;
+            background-color: #eee;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* --- 作品集/项目 --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0,0,0,0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .project-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .tags span {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            background: #fff;
+            border-radius: 4px;
+            margin-right: 5px;
+            color: var(--text-secondary);
+            border: 1px solid #eee;
+        }
+
+        /* --- 页脚 --- */
+        footer {
+            padding: 50px 0;
+            text-align: center;
+            border-top: 1px solid #eee;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        /* --- 移动端适配 --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .about-content { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* 简单处理：移动端隐藏菜单，实际可做汉堡菜单 */
+            .avatar-placeholder { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">YourName.</a>
+                <ul class="nav-links">
+                    <li><a href="#about">关于</a></li>
+                    <li><a href="#work">作品</a></li>
+                    <li><a href="#contact">联系</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 首屏 Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>你好，我是张三。<br>一名产品设计师。</h1>
+            <p>专注于创造简洁、直观且富有影响力的数字体验。目前居住在上海，致力于将复杂问题转化为优雅的设计方案。</p>
+            <a href="#work" class="btn">查看我的作品</a>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>拥有5年的数字产品设计经验。我相信好的设计不仅是视觉上的美感，更是功能与形式的完美平衡。</p>
+                    <p>在工作之余，我喜欢摄影、阅读科幻小说以及探索城市的独立咖啡馆。我也热衷于开源社区，偶尔会贡献一些代码。</p>
+                    <p><strong>技能栈：</strong> UI/UX Design, Figma, HTML/CSS, React Basics.</p>
+                </div>
+                <!-- 这里可以换成你的真实照片 <img src="your-photo.jpg" alt="Avatar"> -->
+                <div class="avatar-placeholder">
+                    [ 你的照片 400x400 ]
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集 -->
+    <section id="work">
+        <div class="container">
+            <h2 class="section-title">精选作品</h2>
+            <div class="projects-grid">
+                <!-- 项目 1 -->
+                <article class="project-card">
+                    <h3>金融仪表盘重构</h3>
+                    <p>为一家Fintech公司重新设计的数据可视化后台，提升了用户30%的数据读取效率。</p>
+                    <div class="tags">
+                        <span>Figma</span>
+                        <span>Data Viz</span>
+                        <span>UX Research</span>
+                    </div>
+                </article>
+
+                <!-- 项目 2 -->
+                <article class="project-card">
+                    <h3>Minimalist E-commerce</h3>
+                    <p>一个专注于时尚品牌的极简主义电商网站设计，强调图片展示与流畅的结账流程。</p>
+                    <div class="tags">
+                        <span>Web Design</span>
+                        <span>Shopify</span>
+                        <span>Branding</span>
+                    </div>
+                </article>
+
+                <!-- 项目 3 -->
+                <article class="project-card">
+                    <h3>Travel App Concept</h3>
+                    <p>一款帮助独自旅行者寻找当地伴游的移动应用概念设计。</p>
+                    <div class="tags">
+                        <span>Mobile App</span>
+                        <span>iOS</span>
+                        <span>Prototyping</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式 / 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="social-links">
+                <a href="#">Twitter / X</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+                <a href="mailto:email@example.com">Email Me</a>
+            </div>
+            <p>&copy; 2026 Zhang San. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
